@@ -1,0 +1,44 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Chrome Tab Top Order preview</title>
+  <desc id="desc">A preview showing newly opened browser tabs moving to the top of the tab list.</desc>
+  <rect width="1200" height="630" rx="32" fill="#F7F4EF"/>
+  <rect x="88" y="72" width="1024" height="486" rx="24" fill="#FFFFFF" stroke="#D6D9E0" stroke-width="3"/>
+  <rect x="88" y="72" width="1024" height="70" rx="24" fill="#263238"/>
+  <circle cx="126" cy="107" r="10" fill="#FF625C"/>
+  <circle cx="158" cy="107" r="10" fill="#FFBD44"/>
+  <circle cx="190" cy="107" r="10" fill="#00CA4E"/>
+  <rect x="232" y="92" width="548" height="30" rx="15" fill="#F3F6F8"/>
+  <text x="256" y="113" fill="#40515A" font-family="Arial, sans-serif" font-size="18">chrome://extensions</text>
+
+  <rect x="128" y="174" width="318" height="326" rx="18" fill="#EEF3F7" stroke="#D0DAE3" stroke-width="2"/>
+  <text x="154" y="216" fill="#263238" font-family="Arial, sans-serif" font-size="26" font-weight="700">Before</text>
+  <g font-family="Arial, sans-serif" font-size="20">
+    <rect x="154" y="244" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="176" y="273" fill="#536670">Old tab 1</text>
+    <rect x="154" y="302" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="176" y="331" fill="#536670">Old tab 2</text>
+    <rect x="154" y="360" width="248" height="44" rx="10" fill="#FFF7E6" stroke="#FFB020" stroke-width="2"/>
+    <text x="176" y="389" fill="#7A4C00">New tab</text>
+    <rect x="154" y="418" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="176" y="447" fill="#536670">Old tab 3</text>
+  </g>
+
+  <path d="M516 334H667" stroke="#1A73E8" stroke-width="12" stroke-linecap="round"/>
+  <path d="M647 286L701 334L647 382" stroke="#1A73E8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="514" y="272" fill="#1A73E8" font-family="Arial, sans-serif" font-size="28" font-weight="700">auto move</text>
+
+  <rect x="754" y="174" width="318" height="326" rx="18" fill="#EEF3F7" stroke="#D0DAE3" stroke-width="2"/>
+  <text x="780" y="216" fill="#263238" font-family="Arial, sans-serif" font-size="26" font-weight="700">After</text>
+  <g font-family="Arial, sans-serif" font-size="20">
+    <rect x="780" y="244" width="248" height="44" rx="10" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+    <text x="802" y="273" fill="#174EA6">New tab</text>
+    <rect x="780" y="302" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="802" y="331" fill="#536670">Old tab 1</text>
+    <rect x="780" y="360" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="802" y="389" fill="#536670">Old tab 2</text>
+    <rect x="780" y="418" width="248" height="44" rx="10" fill="#FFFFFF" stroke="#D0DAE3"/>
+    <text x="802" y="447" fill="#536670">Old tab 3</text>
+  </g>
+
+  <text x="128" y="545" fill="#263238" font-family="Arial, sans-serif" font-size="30" font-weight="700">Newest tabs first. Older tabs below.</text>
+</svg>

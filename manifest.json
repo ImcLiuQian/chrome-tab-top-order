@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Tab Top Order",
+  "version": "0.1.0",
+  "description": "Move newly opened tabs to the top of the current Chrome window.",
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "action": {
+    "default_title": "Reverse current window tabs"
+  }
+}
