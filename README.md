@@ -17,6 +17,7 @@ It is useful for vertical tab bars, sidebar-style tab lists, and workflows where
 ## Features
 
 - Moves newly opened normal tabs to the top of the current window.
+- Places duplicated tabs directly above their source tab instead of moving them to the very top.
 - Keeps pinned tabs at the very front and leaves them untouched.
 - Lets you click the extension icon to reverse the existing normal tab order once.
 - No build step and no dependencies; load the folder directly in Chrome.
