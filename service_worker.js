@@ -53,6 +53,14 @@ async function duplicatedTabIndex(tab) {
   return openerUrl && tabUrl && openerUrl === tabUrl ? opener.index : null;
 }
 
+async function refocusMovedTab(tab, index) {
+  if (!tab.active) {
+    return;
+  }
+
+  await chrome.tabs.highlight({ windowId: tab.windowId, tabs: index });
+}
+
 async function moveCreatedTab(tab) {
   if (!tab.id || tab.pinned) {
     return;
@@ -63,6 +71,7 @@ async function moveCreatedTab(tab) {
   const index = duplicateIndex ?? (await firstNormalTabIndex(latest.windowId));
 
   await chrome.tabs.move(tab.id, { index });
+  await refocusMovedTab(latest, index);
 }
 
 async function reverseCurrentWindow(windowId) {
