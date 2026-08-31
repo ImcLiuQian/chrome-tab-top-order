@@ -84,6 +84,17 @@ async function reverseCurrentWindow(windowId) {
   }
 }
 
+async function reverseOpenWindows() {
+  await wait(1000);
+  const windows = await chrome.windows.getAll({ windowTypes: ["normal"] });
+
+  for (const window of windows) {
+    if (typeof window.id === "number") {
+      await reverseCurrentWindow(window.id);
+    }
+  }
+}
+
 chrome.tabs.onCreated.addListener((tab) => {
   moveCreatedTab(tab).catch((error) => {
     console.warn("Failed to move created tab:", error);
@@ -97,5 +108,11 @@ chrome.action.onClicked.addListener((tab) => {
 
   reverseCurrentWindow(tab.windowId).catch((error) => {
     console.warn("Failed to reverse current window tabs:", error);
+  });
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  return reverseOpenWindows().catch((error) => {
+    console.warn("Failed to reverse tabs on startup:", error);
   });
 });

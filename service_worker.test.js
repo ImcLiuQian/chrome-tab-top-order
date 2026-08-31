@@ -4,24 +4,26 @@ const path = require("node:path");
 const test = require("node:test");
 const vm = require("node:vm");
 
-function loadWorker(chrome) {
+function loadWorker(chrome, setTimeoutImpl = setTimeout) {
   const code = fs.readFileSync(path.join(__dirname, "service_worker.js"), "utf8");
   const context = {
     chrome,
     console: { warn() {} },
-    setTimeout,
+    setTimeout: setTimeoutImpl,
   };
 
   vm.runInNewContext(code, context, { filename: "service_worker.js" });
   return context;
 }
 
-function createChromeMock(tabs) {
+function createChromeMock(tabs, windows = []) {
   const tabById = new Map(tabs.map((tab) => [tab.id, { ...tab }]));
   const calls = [];
+  const listeners = {};
 
   return {
     calls,
+    listeners,
     tabById,
     tabs: {
       async query({ windowId }) {
@@ -39,10 +41,31 @@ function createChromeMock(tabs) {
       async highlight(highlightInfo) {
         calls.push({ method: "highlight", highlightInfo });
       },
-      onCreated: { addListener() {} },
+      onCreated: {
+        addListener(listener) {
+          listeners.onCreated = listener;
+        },
+      },
     },
     action: {
-      onClicked: { addListener() {} },
+      onClicked: {
+        addListener(listener) {
+          listeners.onClicked = listener;
+        },
+      },
+    },
+    runtime: {
+      onStartup: {
+        addListener(listener) {
+          listeners.onStartup = listener;
+        },
+      },
+    },
+    windows: {
+      async getAll(getInfo) {
+        calls.push({ method: "getAllWindows", getInfo });
+        return windows;
+      },
     },
   };
 }
@@ -79,5 +102,29 @@ test("does not refocus a background created tab after moving it", async () => {
 
   assert.deepEqual(plain(chrome.calls), [
     { method: "move", id: 2, moveProperties: { index: 0 } },
+  ]);
+});
+
+test("reverses restored normal tabs in every window once on startup", async () => {
+  const chrome = createChromeMock(
+    [
+      { id: 1, windowId: 7, index: 0, pinned: true },
+      { id: 2, windowId: 7, index: 1, pinned: false },
+      { id: 3, windowId: 7, index: 2, pinned: false },
+      { id: 4, windowId: 8, index: 0, pinned: false },
+      { id: 5, windowId: 8, index: 1, pinned: false },
+    ],
+    [{ id: 7 }, { id: 8 }],
+  );
+  loadWorker(chrome, (callback) => callback());
+
+  await chrome.listeners.onStartup();
+
+  assert.deepEqual(plain(chrome.calls), [
+    { method: "getAllWindows", getInfo: { windowTypes: ["normal"] } },
+    { method: "move", id: 3, moveProperties: { index: 1 } },
+    { method: "move", id: 2, moveProperties: { index: 2 } },
+    { method: "move", id: 5, moveProperties: { index: 0 } },
+    { method: "move", id: 4, moveProperties: { index: 1 } },
   ]);
 });
